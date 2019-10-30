@@ -23,7 +23,8 @@ units = gus.UnitsApi(client)
 
 
 def get_subject(subject_name):
-    results = subjects_api.subjects_search_get(name=subject_name, page_size=100).results
+    results = subjects_api.subjects_search_get(name=subject_name,
+                                               page_size=100).results
     subject = next((result
                     for result
                     in results
