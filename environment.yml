@@ -1,0 +1,12 @@
+# run: conda env create --file environment.yml
+
+name: tumieszkaj-crawler
+channels:
+  - conda-forge
+dependencies:
+  - python=3.7
+  - pandas
+  - jupyterlab
+  - pip
+  - pip:
+      - "--editable=git+https://github.com/dzieciou/gus-bdl-client.git"
