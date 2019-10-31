@@ -1,0 +1,80 @@
+{
+  "name": "root",
+  "children": [
+    {
+      "name": "STAN I OCHRONA \u015aRODOWISKA",
+      "id": "K9",
+      "children": [
+        {
+          "name": "TERENY ZIELENI",
+          "id": "G219",
+          "children": [
+            {
+              "name": "Tereny zieleni - wska\u017aniki",
+              "id": "P3303",
+              "children": [
+                {
+                  "name": "udzia\u0142 park\u00f3w, ziele\u0144c\u00f3w i teren\u00f3w zieleni osiedlowej w powierzchni og\u00f3\u0142em",
+                  "id": 395921,
+                  "level": 6
+                }
+              ]
+            },
+            {
+              "name": "Tereny zieleni",
+              "id": "P2596",
+              "children": [
+                {
+                  "name": "ziele\u0144ce obiekty og\u00f3\u0142em (w miastach i na wsi)",
+                  "id": 73855,
+                  "level": 6
+                },
+                {
+                  "name": "ziele\u0144ce powierzchnia og\u00f3\u0142em (w miastach i na wsi)",
+                  "id": 73848,
+                  "level": 6
+                },
+                {
+                  "name": "lasy gminne powierzchnia og\u00f3\u0142em (w miastach i na wsi)",
+                  "id": 73851,
+                  "level": 6
+                },
+                {
+                  "name": "parki spacerowo - wypoczynkowe powierzchnia og\u00f3\u0142em (w miastach i na wsi)",
+                  "id": 73847,
+                  "level": 6
+                }
+              ]
+            },
+            {
+              "name": "Rodzinne ogrody dzia\u0142kowe",
+              "id": "P1980",
+              "children": [
+                {
+                  "name": "ogrody liczba",
+                  "id": 10631,
+                  "level": 3
+                },
+                {
+                  "name": "ogrody powierzchnia",
+                  "id": 10632,
+                  "level": 3
+                },
+                {
+                  "name": "dzia\u0142ki liczba",
+                  "id": 10633,
+                  "level": 3
+                },
+                {
+                  "name": "dzia\u0142ki powierzchnia",
+                  "id": 10634,
+                  "level": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
