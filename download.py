@@ -3,7 +3,6 @@ from anytree.importer import JsonImporter
 from gus_crawler import Crawler
 
 crawler = Crawler()
-importer = JsonImporter()
 
 l = [
     (

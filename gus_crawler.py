@@ -57,6 +57,7 @@ class Crawler:
         df.sort_index(inplace=True)
         return df
 
+
     def get_download_request(self, paths):
         request = self._paths_to_tree(paths)
         online_subjects_1 = self.subjects_api.subjects_get(
