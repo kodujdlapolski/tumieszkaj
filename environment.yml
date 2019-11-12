@@ -11,4 +11,4 @@ dependencies:
   - matplotlib
   - pip:
       - anytree
-      - "--editable=git+https://github.com/dzieciou/gus-bdl-client.git"
+      - scrapy
