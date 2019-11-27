@@ -9,7 +9,7 @@ Aby zainstalować wszystkie narzędzia wymagana jest [Anaconda](https://www.anac
 Następnie należy wykonać następujące instrukcje w konsoli:
 
 ```$bash
-git clone https://github.com/dzieciou/tumieszkaj.git
+git clone https://github.com/kodujdlapolski/tumieszkaj.git
 cd tumieszkaj
 conda env create --file environment.yml
 conda activate tumieszkaj
