@@ -9,10 +9,10 @@ Aby zainstalować wszystkie narzędzia wymagana jest [Anaconda](https://www.anac
 Następnie należy wykonać następujące instrukcje w konsoli:
 
 ```$bash
-git clone https://github.com/dzieciou/tumieszkaj-crawler.git
-cd tumieszkaj-crawler
+git clone https://github.com/dzieciou/tumieszkaj.git
+cd tumieszkaj
 conda env create --file environment.yml
-conda activate tumieszkaj-crawler
+conda activate tumieszkaj
 ```
 
 Po uruchomieniu zainstalowane są wszystkie wymagane zależności.

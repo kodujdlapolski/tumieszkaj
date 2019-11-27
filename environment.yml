@@ -1,6 +1,6 @@
 # run: conda env create --file environment.yml
 
-name: tumieszkaj-crawler
+name: tumieszkaj
 channels:
   - conda-forge
 dependencies:
