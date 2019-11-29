@@ -299,15 +299,16 @@ class DataSpider(PagedSpider):
             yield datum
 
 
-def get_settings():
-    return {
+def get_settings(api_key=None):
+    settings = {
         'CONCURRENT_REQUESTS': 16,
         'AUTOTHROTTLE_ENABLED': True,
         'AUTOTHROTTLE_DEBUG': True,
         'DOWNLOAD_DELAY': 2,
         'DOWNLOADER_MIDDLEWARES': {'gus.middleware.ApiKeyAuthMiddleware': 543,
                                    'gus.middleware.FailedStatsMiddleware': 950},
-        # TODO This should be factored out so some configuration
-        'API_KEY': 'afeb163d-fab0-48e0-eb76-08d75c76efda',
         'DOWNLOADER_STATS': True,
     }
+    if not api_key is None:
+        settings['API_KEY'] = api_key
+    return settings
