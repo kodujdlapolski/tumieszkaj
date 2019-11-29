@@ -54,5 +54,11 @@ czyli dopuszczalną ilość zapytań na minutę, miesiąc, etc.
 
 MIT License.
 
-#### GUS
+#### Dane GUS
+
+Dane Głównego Urzędu Statystycznego (GUS) pochodzą ze [Bazy Danych Lokalnych](https://bdl.stat.gov.pl/BDL).
+Główny Urząd Statystyczny nie ma zastrzeżeń co do kopiowania plików i stron oraz dokonywania 
+wydruków, w tym do własnych opracowań, pod warunkiem, że będzie podane ich źródło. Szczegółowe
+informacje na temat praw autorskich tych danych znajdują się na na [stronie GUSu](https://stat.gov.pl/copyright).
+
 
