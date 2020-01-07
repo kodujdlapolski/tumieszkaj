@@ -1,3 +1,7 @@
+"""
+The module with additional Scrapy middlewares.
+"""
+
 from scrapy import signals
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 from scrapy.utils.response import response_status_message
@@ -23,7 +27,6 @@ class ApiKeyAuthMiddleware:
 
 
 class FailedStatsMiddleware:
-    # TODO Ask for feedback on GitHub
 
     def __init__(self, stats):
         self.stats = stats

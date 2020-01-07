@@ -1,3 +1,7 @@
+"""
+The Scrapy crawlers for crawling data and metadata from GUS BDL API.
+"""
+
 import json
 
 import scrapy
@@ -76,11 +80,13 @@ class Datum(scrapy.Item):
 class GusSpider(scrapy.Spider):
     allowed_domain = 'bdl.stat.gov.pl'
     base_url = 'https://bdl.stat.gov.pl/api/v1'
-    # TODO This should go to crawler.settings
-    data_dir = 'data'
 
 
 class PagedSpider(GusSpider):
+    """
+    Abstract spider to handle paged results.
+    """
+
     MAX_PAGE_SIZE = 100
 
     def parse(self, response):
@@ -98,9 +104,21 @@ class PagedSpider(GusSpider):
 
 
 class SubjectsSpider(PagedSpider):
+    """
+    Crawles metadata about available variable subjects.
+
+    Construction parameters:
+
+    feed_dir: directory where crawled metadata will be stored.
+    """
+
     name = 'gus_subjects'
     custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/subjects.jl'}
+                       'FEED_URI': '%(feed_dir)s/subjects.jl'}
+
+    def __init__(self, *args, **kwargs):
+        self.feed_dir = kwargs.pop('feed_dir', '')
+        super(SubjectsSpider, self).__init__(*args, **kwargs)
 
     def subject_request(self, subject_id):
         url = f'{self.base_url}/subjects/{subject_id}?format=json&lang=pl'
@@ -140,9 +158,21 @@ class SubjectsSpider(PagedSpider):
 
 
 class AreasSpider(PagedSpider):
+    """
+    Crawles metadata about available areas.
+
+    Construction parameters:
+
+    feed_dir: directory where crawled metadata will be stored.
+    """
+
     name = 'gus_areas'
     custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/areas.jl'}
+                       'FEED_URI': '%(feed_dir)s/areas.jl'}
+
+    def __init__(self, *args, **kwargs):
+        self.feed_dir = kwargs.pop('feed_dir', '')
+        super(AreasSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         url = f'{self.base_url}/units?lang=pl&format=json&page-size={self.MAX_PAGE_SIZE}'
@@ -169,9 +199,21 @@ class AreasSpider(PagedSpider):
 
 
 class LevelsSpider(PagedSpider):
+    """
+    Crawles metadata about available levels.
+
+    Construction parameters:
+
+    feed_dir: directory where crawled metadata will be stored.
+    """
+
     name = 'gus_levels'
     custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/levels.jl'}
+                       'FEED_URI': '%(feed_dir)s/levels.jl'}
+
+    def __init__(self, *args, **kwargs):
+        self.feed_dir = kwargs.pop('feed_dir', '')
+        super(LevelsSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         url = f'{self.base_url}/levels?lang=pl&format=json&page-size={self.MAX_PAGE_SIZE}'
@@ -185,9 +227,21 @@ class LevelsSpider(PagedSpider):
 
 
 class AttributesSpider(PagedSpider):
+    """
+    Crawles metadata about available attributes.
+
+    Construction parameters:
+
+    feed_dir: directory where crawled metadata will be stored.
+    """
+
     name = 'gus_attributes'
     custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/attributes.jl'}
+                       'FEED_URI': '%(feed_dir)s/attributes.jl'}
+
+    def __init__(self, *args, **kwargs):
+        self.feed_dir = kwargs.pop('feed_dir', '')
+        super(AttributesSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         url = f'{self.base_url}/attributes?lang=pl&format=json&page-size={self.MAX_PAGE_SIZE}'
@@ -203,9 +257,21 @@ class AttributesSpider(PagedSpider):
 
 
 class AggregatesSpider(PagedSpider):
+    """
+    Crawles metadata about available aggregates.
+
+    Construction parameters:
+
+    feed_dir: directory where crawled metadata will be stored.
+    """
+
     name = 'gus_aggregates'
     custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/aggregates.jl'}
+                       'FEED_URI': '%(feed_dir)s/aggregates.jl'}
+
+    def __init__(self, *args, **kwargs):
+        self.feed_dir = kwargs.pop('feed_dir', '')
+        super(AggregatesSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         url = f'{self.base_url}/aggregates?lang=pl&format=json&page-size={self.MAX_PAGE_SIZE}'
@@ -221,28 +287,56 @@ class AggregatesSpider(PagedSpider):
 
 
 class MeasuresSpider(PagedSpider):
-    name = 'gus_measures'
+    """
+    Crawles metadata about available measures.
 
-    custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/measures.jl'}
+    Construction parameters:
 
-    def start_requests(self):
-        url = f'{self.base_url}/measures?lang=pl&format=json' \
-              f'&page-size={self.MAX_PAGE_SIZE}'
-        yield Request(url, self.parse)
+    feed_dir: directory where crawled metadata will be stored.
+    """
 
-    def handle_result(self, result, response_body):
-        measure = Measure()
-        measure['id'] = result['id']
-        measure['name'] = result['name']
-        yield measure
+
+name = 'gus_measures'
+
+custom_settings = {'FEED_FORMAT': 'jsonlines',
+                   'FEED_URI': '%(feed_dir)s/measures.jl'}
+
+
+def __init__(self, *args, **kwargs):
+    self.feed_dir = kwargs.pop('feed_dir', '')
+    super(MeasuresSpider, self).__init__(*args, **kwargs)
+
+
+def start_requests(self):
+    url = f'{self.base_url}/measures?lang=pl&format=json' \
+          f'&page-size={self.MAX_PAGE_SIZE}'
+    yield Request(url, self.parse)
+
+
+def handle_result(self, result, response_body):
+    measure = Measure()
+    measure['id'] = result['id']
+    measure['name'] = result['name']
+    yield measure
 
 
 class VariablesSpider(PagedSpider):
+    """
+    Crawles metadata about available variables.
+
+    Construction parameters:
+
+    feed_dir: directory where crawled metadata will be stored.
+    """
+
     name = 'gus_variables'
 
     custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/variables.jl'}
+                       'FEED_URI': '%(feed_dir)s/variables.jl'}
+
+    def __init__(self, *args, **kwargs):
+        self.feed_dir = kwargs.pop('feed_dir', '')
+        super(VariablesSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         url = f'{self.base_url}/variables?lang=pl&format=json' \
@@ -258,7 +352,7 @@ class VariablesSpider(PagedSpider):
     def handle_result(self, result, response_body):
         var = Variable()
         var['id'] = result['id']
-        var['name'] = self._parse_var_name(result, response_body)
+        var['name'] = self._parse_var_name(result)
         var['level'] = result['level']
         var['measureId'] = result['measureUnitId']
         var['subjectId'] = result['subjectId']
@@ -266,10 +360,25 @@ class VariablesSpider(PagedSpider):
 
 
 class DataSpider(PagedSpider):
+    """
+    Crawles data for all years for variables and areas given when constructing
+    a crawler.
+
+    Construction parameters:
+
+     vars_ids: IDs of variables to crawl.
+    areas_ids: IDs of areas to crawl.
+     feed_dir: directory where crawled data will be stored.
+    """
+
     name = 'gus_data'
 
     custom_settings = {'FEED_FORMAT': 'jsonlines',
-                       'FEED_URI': f'{GusSpider.data_dir}/data.jl'}
+                       'FEED_URI': '%(feed_dir)s/data.jl'}
+
+    def __init__(self, *args, **kwargs):
+        self.feed_dir = kwargs.pop('feed_dir', '')
+        super(DataSpider, self).__init__(*args, **kwargs)
 
     def is_localility(self, area_id):
         # Statistical towns level, i.e, level = 7

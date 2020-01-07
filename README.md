@@ -28,15 +28,16 @@ wartości zmiennych.
 Aby ściągnąć wszystkie metadane należy uruchomić:
 
 ```$bash
-cd gus
-crawl_metadata.py
+pip install -e .
+python scripts/crawl_gus_bdl_metadata.py --api-key "afeb163d-..." --feed-dir "data/gus/metadata"
 ```
 
-Aby ściągnąć dane należy uruchomić: 
+Aby ściągnąć wybrane dane dla LGOnależy uruchomić: 
 
 ```$bash
-cd gus
-crawl_data.py
+pip install -e .
+python scripts/crawl_dolnoslaskie_data.py --api-key "afeb163d-..." --feed-dir "data/gus/data" 
+  --metadata-dir "data/gus/metadata"
 ```
 
 Lista zmiennych i obszar, dla których chcemy ściągnąć dane jest określony w pliku `crawl_data.py`.
