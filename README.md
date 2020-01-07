@@ -32,7 +32,7 @@ pip install -e .
 python scripts/crawl_gus_bdl_metadata.py --api-key "afeb163d-..." --feed-dir "data/gus/metadata"
 ```
 
-Aby ściągnąć wybrane dane dla LGOnależy uruchomić: 
+Aby ściągnąć wybrane dane dla województwa dolnośląskiego należy uruchomić: 
 
 ```$bash
 pip install -e .

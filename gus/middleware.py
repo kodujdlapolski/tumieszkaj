@@ -8,8 +8,10 @@ from scrapy.utils.response import response_status_message
 
 
 class ApiKeyAuthMiddleware:
-    """Set X-ClientId Authorization header
-    (api_key spider class attribute)"""
+    """
+    Set X-ClientId Authorization header
+    (api_key spider class attribute)
+    """
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -27,6 +29,9 @@ class ApiKeyAuthMiddleware:
 
 
 class FailedStatsMiddleware:
+    """
+    Includes failed_urls information in crawling final statistics.
+    """
 
     def __init__(self, stats):
         self.stats = stats

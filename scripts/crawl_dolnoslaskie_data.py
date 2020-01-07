@@ -5,10 +5,8 @@ from pathlib import Path
 
 from scrapy.utils.log import configure_logging
 
-from gus.crawl_data import (
-    find_areas,
-    crawl_data
-)
+from gus.crawlers import crawl_data
+from gus.db import MetadataDB
 
 if __name__ == '__main__':
     configure_logging(install_root_handler=False)
@@ -55,6 +53,8 @@ if __name__ == '__main__':
             10634, 59631, 10689, 288096, 10691, 10693, 2090, 1508, 453827, 1241,
             7614, 474443, 1230, 148551, 410716, 410728, 377288, 73410, 58964,
             58965, 64542, 64543, 64545, 3507, 60505, 196566]
-    areas = find_areas(args.metadata_dir, 'DOLNOŚLĄSKIE')
+
+    metadata = MetadataDB(args.metadata_dir)
+    areas = metadata.find_areas('DOLNOŚLĄSKIE')
 
     crawl_data(vars, areas, args.api_key, args.feed_dir)

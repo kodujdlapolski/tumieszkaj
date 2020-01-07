@@ -5,6 +5,7 @@ The Scrapy crawlers for crawling data and metadata from GUS BDL API.
 import json
 
 import scrapy
+from scrapy.crawler import CrawlerProcess
 from scrapy.http.request import Request
 
 
@@ -421,3 +422,42 @@ def get_settings(api_key=None):
     if not api_key is None:
         settings['API_KEY'] = api_key
     return settings
+
+def crawl_metadata(api_key=None, feed_dir=None):
+    """
+    Runs a number of spiders to crawl GUS BDL metadata in parallel.
+
+    :param api_key:
+    :param feed_dir:
+    """
+
+    if feed_dir is None:
+        raise ValueError('feed_dir is required')
+
+    process = CrawlerProcess(settings=get_settings(api_key),
+                             install_root_handler=True)
+    process.crawl(MeasuresSpider, feed_dir=feed_dir)
+    process.crawl(LevelsSpider, feed_dir=feed_dir)
+    process.crawl(AttributesSpider, feed_dir=feed_dir)
+    process.crawl(AggregatesSpider, feed_dir=feed_dir)
+    process.crawl(AreasSpider, feed_dir=feed_dir)
+    process.crawl(VariablesSpider, feed_dir=feed_dir)
+    process.crawl(SubjectsSpider, feed_dir=feed_dir)
+    process.start()
+
+def crawl_data(vars, areas, api_key=None, feed_dir=None):
+    """
+
+    :param vars: GUS BDL IDs of variables to fetch
+    :param areas: GUS BDL IDs of areas to fetch
+    :param api_key:
+    :param feed_dir:
+    :return:
+    """
+    if feed_dir is None:
+        raise ValueError('feed_dir is required')
+
+    process = CrawlerProcess(settings=get_settings(api_key),
+                             install_root_handler=True)
+    process.crawl(DataSpider, vars_ids=vars, areas_ids=areas, feed_dir=feed_dir)
+    process.start()
