@@ -10,6 +10,7 @@ dependencies:
   - pip
   - matplotlib
   - shapely
+  - tqdm
   - pip:
       - anytree
       - tables

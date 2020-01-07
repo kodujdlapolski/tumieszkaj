@@ -55,6 +55,6 @@ if __name__ == '__main__':
             58965, 64542, 64543, 64545, 3507, 60505, 196566]
 
     metadata = MetadataDB(args.metadata_dir)
-    areas = metadata.find_areas('DOLNOŚLĄSKIE')
+    areas = metadata.find_subareas_ids('DOLNOŚLĄSKIE')
 
     crawl_data(vars, areas, args.api_key, args.feed_dir)
