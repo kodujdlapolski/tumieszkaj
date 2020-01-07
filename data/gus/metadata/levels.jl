@@ -6,3 +6,4 @@
 {"id": 5, "name": "Poziom Powiat\u00f3w"}
 {"id": 6, "name": "Poziom Gmin"}
 {"id": 7, "name": "Poziom miejscowo\u015bci statystycznej"}
+

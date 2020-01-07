@@ -79,8 +79,8 @@ def get_variables(subjects_fpath, variables_fpath):
 
 # TODO Introduce parallel reading
 if __name__ == '__main__':
-    data_slaskie = pd.read_json('data/data-śląskie.jl', lines=True)
-    data_mazowieckie  = pd.read_json('data/data-mazowieckie.jl', lines=True)
+    data_slaskie = pd.read_json('data/gus/śląskie/data.jl', lines=True)
+    data_mazowieckie  = pd.read_json('data/gus/mazowieckie/data.jl', lines=True)
     data = pd.concat([data_slaskie, data_mazowieckie], axis=0)
     levels = pd.read_json('data/levels.jl', lines=True)
     measures = pd.read_json('data/measures.jl', lines=True)
@@ -115,5 +115,5 @@ if __name__ == '__main__':
                'value', 'measureName']
 
     merged_data = merged_data[columns].sort_values(by=columns)
-    merged_data.to_csv('data/merged_data.csv.gz', compression='gzip')
-    merged_data.to_hdf('data/merged_data.h5', key='gus_bdl')
+    merged_data.to_csv('data/gus/merged_data.csv.gz', compression='gzip')
+    merged_data.to_hdf('data/gus/merged_data.h5', key='gus_bdl')
