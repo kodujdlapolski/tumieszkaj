@@ -42,6 +42,34 @@ python scripts/crawl_dolnoslaskie_data.py --api-key "afeb163d-..." --feed-dir "d
 
 Lista zmiennych i obszar, dla których chcemy ściągnąć dane jest określony w pliku `crawl_data.py`.
 
+## Lokalna instancja OpenStreetMap dla wybranego województwa
+
+Aby uruchomić lokalną instancję OpenStreetMap (OSM) dla wybranego województwa 
+(tutaj śląskiego), wymagane jest środowisko z Dockerem. Następnie należy zainicjalizować 
+kontener dockera:
+
+```bash
+docker run \
+  -e OVERPASS_META=yes \
+  -e OVERPASS_MODE=init \
+  -e OVERPASS_PLANET_URL=http://download.geofabrik.de/europe/poland/slaskie-latest.osm.bz2 \
+  -e OVERPASS_DIFF_URL=http://download.geofabrik.de/europe/poland/slaskie-updates/ \
+  -e OVERPASS_RULES_LOAD=10 \
+  -v /big/docker/overpass_db/:/db \
+  -p 12345:80 \
+  -i -t \
+  --name overpass_slaskie wiktorn/overpass-api
+```
+
+Uruchomienia kontenera:
+
+```bash
+docker start overpass_slaskie
+```
+
+Overpass API dla tak postawionej instancji OSM jest teraz dostępny pod: 
+[http://localhost:12345/api/interpreter](http://localhost:12345/api/interpreter).
+
 ### Architektura
 
 Robot korzysta z [API RESTowego](https://api.stat.gov.pl/Home/BdlApi) wystawionego przez GUS. 
