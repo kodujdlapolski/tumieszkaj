@@ -3,6 +3,7 @@ The module provides methods to work with trees
 """
 
 import anytree as t
+from tqdm import tqdm
 
 
 def build_tree(entries):
@@ -14,7 +15,7 @@ def build_tree(entries):
     """
     root = t.Node('root', my_name='root', id=-1)
     nodes = {}
-    for e in entries:
+    for e in tqdm(entries, desc='Building tree'):
         id = e['id']
         parent_id = e.get('parentId', None)
         if parent_id is None:
