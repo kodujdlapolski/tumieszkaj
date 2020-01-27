@@ -360,6 +360,9 @@ class VariablesSpider(PagedSpider):
         yield var
 
 
+MAX_VARS_PER_REQUEST = 144
+
+
 class DataSpider(PagedSpider):
     """
     Crawles data for all years for variables and areas given when constructing
@@ -386,15 +389,27 @@ class DataSpider(PagedSpider):
         return '-' in area_id
 
     def start_requests(self):
+
+        def chunks(lst, n):
+            """Yield successive n-sized chunks from lst."""
+            for i in range(0, len(lst), n):
+                yield lst[i:i + n]
+
         for area_id in self.areas_ids:
-            query = '&'.join(f'var-id={var_id}' for var_id in self.vars_ids)
-            if self.is_localility(area_id):
-                url = f'{self.base_url}/data/localities/by-unit/{area_id}/' \
-                      f'?lang=pl&format=json&{query}&page-size={self.MAX_PAGE_SIZE}'
-            else:
-                url = f'{self.base_url}/data/by-unit/{area_id}/?lang=pl' \
-                      f'&format=json&{query}&page-size={self.MAX_PAGE_SIZE}'
-            yield Request(url, self.parse)
+            for vars_ids_chunk in chunks(self.vars_ids, MAX_VARS_PER_REQUEST):
+
+                query = '&'.join(f'var-id={var_id}'
+                                 for var_id
+                                 in vars_ids_chunk)
+
+                if self.is_localility(area_id):
+                    url = f'{self.base_url}/data/localities/by-unit/{area_id}/' \
+                          f'?lang=pl&format=json&{query}&page-size={self.MAX_PAGE_SIZE}'
+                else:
+                    url = f'{self.base_url}/data/by-unit/{area_id}/?lang=pl' \
+                          f'&format=json&{query}&page-size={self.MAX_PAGE_SIZE}'
+
+                yield Request(url, self.parse)
 
     def handle_result(self, result, response_body):
         for value in result['values']:
@@ -423,6 +438,7 @@ def get_settings(api_key=None):
         settings['API_KEY'] = api_key
     return settings
 
+
 def crawl_metadata(api_key=None, feed_dir=None):
     """
     Runs a number of spiders to crawl GUS BDL metadata in parallel.
@@ -444,6 +460,7 @@ def crawl_metadata(api_key=None, feed_dir=None):
     process.crawl(VariablesSpider, feed_dir=feed_dir)
     process.crawl(SubjectsSpider, feed_dir=feed_dir)
     process.start()
+
 
 def crawl_data(vars, areas, api_key=None, feed_dir=None):
     """
