@@ -1,6 +1,6 @@
 # run: conda env create --file environment.yml
 
-name: tumieszkaj
+name: tumieszkaj-private
 channels:
   - conda-forge
 dependencies:
@@ -10,6 +10,7 @@ dependencies:
   - pip
   - matplotlib
   - shapely
+  - requests
   - tqdm
   - pip:
       - anytree
@@ -18,4 +19,5 @@ dependencies:
       - geopy
       - OSMPythonTools
       - overpy
+      - jsonlines
       - gtfstk
